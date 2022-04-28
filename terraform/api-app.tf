@@ -24,14 +24,14 @@ resource "kubernetes_manifest" "cloudrun-api" {
               "image" : var.api_image,
               "ports" : [
                 {
-                  "containerPort" : 80,
+                  "containerPort" : 8080,
                   "protocol" : "TCP"
                 }
               ],
               "env" : [
                 {
                   "name" : "API_PORT",
-                  "value" : "80"
+                  "value" : "8080"
                 },
                 {
                   "name" : "TEST_1",

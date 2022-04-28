@@ -14,13 +14,13 @@ rm -rf ko_${VERSION}_${OS}_${ARCH}.tar.gz
 export PROJECT_ID=<PROJECT_ID>
 export KO_DOCKER_REPO="gcr.io/$PROJECT_ID/api-demo"
 
-cd ./api && ko build --platform=all --bare .
+cd ./api && ko build --platform=all --bare --tags "v1" .
 
 cd ../web
 
 export KO_DOCKER_REPO="gcr.io/$PROJECT_ID/web-demo"
 
-ko build --platform=all --bare .
+ko build --platform=all --bare --tags "v1" .
 ```
 
 To make GCR images publically available:
