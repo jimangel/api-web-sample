@@ -34,7 +34,7 @@ func data(w http.ResponseWriter, r *http.Request) {
 }
 
 func new(w http.ResponseWriter, r *http.Request) {
-	url := fmt.Sprintf("%s://%s:%s/post", os.Getenv("API_HTTP_S"), os.Getenv("API_URL"), os.Getenv("API_PORT"))
+	url := fmt.Sprintf("%s://%s/data", os.Getenv("API_HTTP_S"), os.Getenv("API_URL"))
 	resp, err := http.Get(url)
 	if err != nil {
 		log.Fatalln(err)

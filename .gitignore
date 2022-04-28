@@ -1,5 +1,6 @@
 .DS_Store
 
+terraform/.terraform.lock.hcl
    
 # Local .terraform directories
 **/.terraform/*
