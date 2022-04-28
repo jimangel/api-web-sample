@@ -13,7 +13,7 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	fmt.Fprintf(w, "Welcome to the most basic demo using golang / firestore!\n\nTry: /get-data to read firestore via the contianer API\n\nTry: /post-random-data to add data to firestore via the contianer API\n(note: this causes the web server to send a GET request to the API server to generate a POST vs. create a raw POST")
+	fmt.Fprintf(w, "Welcome to the most basic demo using golang / firestore!\n\nTry: /get-data to read firestore via the container API\n\nTry: /post-random-data to add data to firestore via the contianer API\n(note: this causes the web server to send a GET request to the API server to generate a POST vs. create a raw POST")
 }
 
 func data(w http.ResponseWriter, r *http.Request) {
