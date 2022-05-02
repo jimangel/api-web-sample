@@ -12,11 +12,13 @@ resource "kubernetes_manifest" "cloudrun-web" {
     "spec" : {
       "template" : {
         "spec" : {
+          "serviceAccountName" : "default",
           "timeoutSeconds" : 300,
           "containers" : [
             {
               "name" : "user-container",
               "image" : var.web_image,
+              "imagePullPolicy": "Always",
               "ports" : [
                 {
                   "containerPort" : 8080,
@@ -29,8 +31,8 @@ resource "kubernetes_manifest" "cloudrun-web" {
                   "value" : "8080"
                 },
                 {
-                  "name" : "API_PORT",
-                  "value" : "80"
+                  "name" : "NO_PORT",
+                  "value" : "true"
                 },
                 {
                   "name" : "API_URL",

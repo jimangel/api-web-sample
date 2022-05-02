@@ -2,7 +2,6 @@ variable "environment" {}
 variable "api_image" {}
 
 resource "kubernetes_manifest" "cloudrun-api" {
-
   manifest = {
     "apiVersion" : "serving.knative.dev/v1",
     "kind" : "Service",
@@ -17,11 +16,13 @@ resource "kubernetes_manifest" "cloudrun-api" {
     "spec" : {
       "template" : {
         "spec" : {
+          "serviceAccountName" : "default",
           "timeoutSeconds" : 300,
           "containers" : [
             {
               "name" : "user-container",
               "image" : var.api_image,
+              "imagePullPolicy": "Always",
               "ports" : [
                 {
                   "containerPort" : 8080,
@@ -32,10 +33,6 @@ resource "kubernetes_manifest" "cloudrun-api" {
                 {
                   "name" : "API_PORT",
                   "value" : "8080"
-                },
-                {
-                  "name" : "TEST_1",
-                  "value" : "1234565"
                 },
                 {
                   "name" : "PROJECT_ID",
