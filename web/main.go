@@ -16,10 +16,27 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Welcome to the most basic demo using golang / firestore!\n\nTry: /get-data to read firestore via the container API\n\nTry: /post-random-data to add data to firestore via the contianer API\n(note: this causes the web server to send a GET request to the API server to generate a POST vs. create a raw POST")
 }
 
+func getUrl(path string) string {
+	// export NO_PORT="true"
+	// This removes the port from the web-app calling the api. Very useful if api is behind another LB.
+	key, exists := os.LookupEnv("NO_PORT")
+	if exists {
+		fmt.Print(key)
+		url := fmt.Sprintf("%s://%s/%s", os.Getenv("API_HTTP_S"), os.Getenv("API_URL"), path)
+		return url
+	} else {
+		fmt.Print(key)
+		url := fmt.Sprintf("%s://%s:%s/%s", os.Getenv("API_HTTP_S"), os.Getenv("API_URL"), os.Getenv("API_PORT"), path)
+		return url
+	}
+}
+
+// 		url := fmt.Sprintf("%s://%s/data", os.Getenv("API_HTTP_S"), os.Getenv("API_URL"))
 func data(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Host:", os.Getenv("HOST_URL"))
-	url := fmt.Sprintf("%s://%s/data", os.Getenv("API_HTTP_S"), os.Getenv("API_URL"))
-	resp, err := http.Get(url)
+	full_url := getUrl("data")
+	fmt.Print(full_url)
+	resp, err := http.Get(full_url)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -34,8 +51,10 @@ func data(w http.ResponseWriter, r *http.Request) {
 }
 
 func new(w http.ResponseWriter, r *http.Request) {
-	url := fmt.Sprintf("%s://%s/post", os.Getenv("API_HTTP_S"), os.Getenv("API_URL"))
-	resp, err := http.Get(url)
+
+	full_url := getUrl("post")
+	fmt.Print(full_url)
+	resp, err := http.Get(full_url)
 	if err != nil {
 		log.Fatalln(err)
 	}
